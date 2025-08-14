@@ -1,0 +1,12 @@
+﻿# .NET build output
+bin/
+obj/
+**/bin/
+**/obj/
+
+# VS / Rider / VS Code misc
+.vs/
+*.user
+*.suo
+*.cache
+*.log
