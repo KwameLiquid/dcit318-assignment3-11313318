@@ -88,6 +88,16 @@ namespace HealthSystem
                 .ToDictionary(g => g.Key, g => g.ToList());
         }
 
+        // NEW: Required method from question
+        public List<Prescription> GetPrescriptionsByPatientId(int patientId)
+        {
+            if (_prescriptionMap.ContainsKey(patientId))
+            {
+                return _prescriptionMap[patientId];
+            }
+            return new List<Prescription>();
+        }
+
         public void PrintAllPatients()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -104,13 +114,15 @@ namespace HealthSystem
 
         public void PrintPrescriptionsForPatient(int id)
         {
-            if (_prescriptionMap.ContainsKey(id))
+            var prescriptions = GetPrescriptionsByPatientId(id);
+
+            if (prescriptions.Count > 0)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine($"\nPrescriptions for Patient ID {id}:");
                 Console.ResetColor();
 
-                foreach (var pres in _prescriptionMap[id])
+                foreach (var pres in prescriptions)
                 {
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     Console.WriteLine($"  - Prescription ID: {pres.Id} | Medication: {pres.MedicationName} | Issued: {pres.DateIssued.ToShortDateString()}");
